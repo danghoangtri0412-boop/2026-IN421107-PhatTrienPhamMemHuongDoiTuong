@@ -25,5 +25,21 @@ public class Registration
             throw new InvalidOperationException("Su kien da het cho");
         return new Registration(member.Id, ev.Id);
     }
+    // US-03: Xác nhận phiếu ở trạng thái pendding
+    public void Confirm()
+    {
+        if (Status != RegistrationStatus.Pending)
+            throw new InvalidOperationException(
+                $"Khong the xac nhan phieu o trang thai {Status}");
+        Status = RegistrationStatus.Confirmed;
+    }
+
+    // US-01: Pending hoặc Confirmed thì huỷ được, đã huỷ rồi thì báo lỗi
+    public void Cancel()
+    {
+        if (Status == RegistrationStatus.Cancelled)
+            throw new InvalidOperationException("Phieu da da huy");
+        Status = RegistrationStatus.Cancelled;
+    }
 
 }

@@ -20,10 +20,17 @@ public class Club
     {
         ArgumentNullException.ThrowIfNull(member);
         if (members.Any(m => m.Id == member.Id))
-            throw new InvalidOperationException($"{member} đã là thành viên");
+            throw new InvalidOperationException($"{member} da la thanh vien");
         members.Add(member);
     }
 
+    // US_05: Tạo Club mới
+    public static Club Create(string name, string description)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Ten Club khong duoc de trong");
+        return new Club(name.Trim(), description?.Trim() ?? "");
+    }
     public int MemberCount(){
         return members.Count();
     }
